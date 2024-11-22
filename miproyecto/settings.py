@@ -9,19 +9,19 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from dotenv import load_dotenv
 from pathlib import Path
 import os
+load_dotenv()  # Carga el archivo .env
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Ruta a las credenciales del archivo JSON
-GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'miproyecto', 'dialogflow_credentials', 'newagent-bwow-0a22843302cb.json')
-
-
+# Ruta a las credenciales de Google desde .env
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
+# Validación para asegurarte de que la variable esté configurada
+if not GOOGLE_APPLICATION_CREDENTIALS:
+    raise ValueError("La variable 'GOOGLE_APPLICATION_CREDENTIALS' no está definida en el archivo .env.")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-u-grt-4+8#$s5e=*p6oc5qoxwd@wv7nsd@*2l$0p@asp=auon&'
 
